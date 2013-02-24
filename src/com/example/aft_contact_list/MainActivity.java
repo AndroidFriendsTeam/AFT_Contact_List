@@ -1,5 +1,7 @@
 package com.example.aft_contact_list;
 
+import java.util.ArrayList;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -20,7 +22,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		findViewById(R.id.btn_select_contact).setOnClickListener(this);
-		
+		findViewById(R.id.btn_list_contact).setOnClickListener(this);
 	}
 
 	@Override
@@ -37,14 +39,23 @@ public class MainActivity extends Activity implements OnClickListener{
 		{
 		case R.id.btn_select_contact : selectContact();
 			break;
+		case R.id.btn_list_contact : openContactList();
+			break;
 		default :
 		}
 	}
 	
+	private void openContactList() {
+	
+		Intent _intent = new Intent(this,ContactListActivity.class);
+		startActivity(_intent);
+		
+	}
+
 	public void selectContact()
 	{
-		Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-		startActivityForResult(intent,PICK_CONTACT);
+		Intent _intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+		startActivityForResult(_intent,PICK_CONTACT);
 		
 	}
 
@@ -72,6 +83,4 @@ public class MainActivity extends Activity implements OnClickListener{
 		
 	}
 	
-	
-
 }
