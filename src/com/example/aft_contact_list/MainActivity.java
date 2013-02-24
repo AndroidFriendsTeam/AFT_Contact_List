@@ -47,8 +47,8 @@ public class MainActivity extends Activity implements OnClickListener{
 	
 	private void openContactList() {
 	
-		Intent _intent = new Intent(this,ContactListActivity.class);
-		startActivity(_intent);
+		Intent _intent = new Intent(this,ActivityContactList.class);
+		startActivityForResult(_intent,0);
 		
 	}
 
