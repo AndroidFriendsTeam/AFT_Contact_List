@@ -9,32 +9,26 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ActivityContactList extends ListActivity {
+public class ActivityContactList extends ListActivity implements OnItemClickListener {
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			
-		ArrayList<Map<String, Object>> _data = new ArrayList<Map<String,Object>>();
 		
-		HashMap<String, Object> _item1 = new HashMap<String,Object>();
-		_item1.put("txt_name","nom 1 ");
-		_item1.put("txt_phone","phone 1 ");
+		getListView().setOnItemClickListener(this);
 		
-		HashMap<String, Object> _item2 = new HashMap<String,Object>();
-		_item2.put("txt_name","nom 2 ");
-		_item2.put("txt_phone","phone 2 ");
-		
-		_data.add(_item1);
-		_data.add(_item2);
-		
-		String[] _from = new String[]{"txt_name","txt_phone"};
-		int[] _to = new int[]{R.id.txt_name,R.id.txt_phone};
+		ArrayList<Map<String, Object>> _data = getListContactPhone();
+				
+		String[] _from = new String[]{"txt_name","txt_phone","ckb_selection"};
+		int[] _to = new int[]{R.id.txt_name,R.id.txt_phone,R.id.ckb_selection};
 		
 		SimpleAdapter adapter = new SimpleAdapter(this,_data,R.layout.activity_contact_list,_from,_to);
 				
@@ -50,38 +44,52 @@ public class ActivityContactList extends ListActivity {
 				break;
 				case R.id.txt_phone : ((TextView)view).setText((String)data);
 				break;
+				case R.id.ckb_selection : ((CheckBox)view).setChecked((Boolean)data);
+				break;
 				}
 								
 				return true;
 			}
 		});
 		
+		
 		setListAdapter(adapter);
 		//listContactPhone();
 		
 	}
 
-	public void listContactPhone()
+	public ArrayList<Map<String, Object>> getListContactPhone()
 	{		
 		
-		ArrayList<String> _listContact = new ArrayList<String>();
-			
+		ArrayList<Map<String, Object>> _data = new ArrayList<Map<String,Object>>();
+		HashMap<String, Object> _item;
+				
+	
 		Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
 		while (phones.moveToNext())
 		{
-		  String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-		  String phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+		  String _name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+		  String _phone = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
 		 
-		  _listContact.add(name+"/"+phone);	
+		  _item = new HashMap<String,Object>();
+		  _item.put("txt_name",_name);
+		  _item.put("txt_phone",_phone);	
+		  _item.put("ckb_selection",false);	
+			
+		  _data.add(_item);
 		  
 		}
 		phones.close();
-		
-		ArrayAdapter<String> _adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,_listContact);
-		
-		setListAdapter(_adapter);
-		
+	
+		return _data;
 		
 	}
-	
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		Toast.makeText(this, "tot", Toast.LENGTH_SHORT).show();
+		
+	}
+
+		
 }
