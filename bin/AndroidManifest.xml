@@ -24,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity android:name="ActivityContactList"></activity>
+        <activity android:name="ActivitySelectionContact"></activity>
+        <activity android:name="ActivityGetContact"></activity>
+        <activity android:name="ActivityResult"></activity>
     </application>
 
 </manifest>

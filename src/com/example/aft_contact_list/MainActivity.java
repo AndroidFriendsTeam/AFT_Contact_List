@@ -23,6 +23,8 @@ public class MainActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_main);
 		findViewById(R.id.btn_select_contact).setOnClickListener(this);
 		findViewById(R.id.btn_list_contact).setOnClickListener(this);
+		findViewById(R.id.btn_select_contact_2).setOnClickListener(this);
+		findViewById(R.id.btn_select_contact_3).setOnClickListener(this);
 	}
 
 	@Override
@@ -41,6 +43,10 @@ public class MainActivity extends Activity implements OnClickListener{
 			break;
 		case R.id.btn_list_contact : openContactList();
 			break;
+		case R.id.btn_select_contact_2: openContactList2();
+			break;
+		case R.id.btn_select_contact_3: openContactList3();
+			break;
 		default :
 		}
 	}
@@ -50,6 +56,20 @@ public class MainActivity extends Activity implements OnClickListener{
 		Intent _intent = new Intent(this,ActivityContactList.class);
 		startActivityForResult(_intent,0);
 		
+	}
+	
+	private void openContactList2() {
+		
+		Intent _intent = new Intent(this,ActivitySelectionContact.class);
+		startActivityForResult(_intent,1);
+		
+	}
+	
+	private void openContactList3() {
+
+		Intent _intent = new Intent(this,ActivityGetContact.class);
+		startActivity(_intent);
+
 	}
 
 	public void selectContact()
