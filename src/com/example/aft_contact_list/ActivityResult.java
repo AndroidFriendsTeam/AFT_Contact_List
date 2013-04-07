@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 public class ActivityResult extends Activity {
 
@@ -25,7 +26,7 @@ public class ActivityResult extends Activity {
 		
 		//Declare a new adapter
 		ArrayAdapter<String> _adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, _result);
-		
+			
 		//Initialize the ListView with the adapter
 		_lsv_result.setAdapter(_adapter);
 				
